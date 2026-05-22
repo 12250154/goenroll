@@ -9,12 +9,21 @@ import (
 )
 
 // database details
+// const (
+// 	postgres_host     = "db"
+// 	postgres_port     = 5432
+// 	postgres_user     = "postgres"
+// 	postgres_password = "postgres"
+// 	postgres_dbname   = "my_db"
+// )
+
+// render db connection details
 const (
-	postgres_host     = "db"
+	postgres_host     = "dpg-d87uvikm0tmc7387i2eg-a.singapore-postgres.render.com"
 	postgres_port     = 5432
-	postgres_user     = "postgres"
-	postgres_password = "postgres"
-	postgres_dbname   = "my_db"
+	postgres_user     = "postgres_admin"
+	postgres_password = "mcYzbhbQpbtsgSVJUHEEWYgQwjS9wLfq"
+	postgres_dbname   = "my_db_wvjv"
 )
 
 // DB varaible to store the address of our database
@@ -22,7 +31,7 @@ var Db *sql.DB
 
 func init() {
 	// create a cinnection string
-	db_info := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", postgres_host, postgres_port, postgres_user, postgres_password, postgres_dbname)
+	db_info := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s", postgres_host, postgres_port, postgres_user, postgres_password, postgres_dbname)
 	var err error
 	// establish the connection to database server using the driver(lib/pq)
 	Db, err = sql.Open("postgres", db_info)
