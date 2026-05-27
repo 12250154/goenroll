@@ -1,6 +1,4 @@
-//const API = "http://localhost:8080";
-
-const API = "https://your-backend-name.onrender.com";
+const API = "http://localhost:8080";
 
 window.onload = function () {
     loadStudents();

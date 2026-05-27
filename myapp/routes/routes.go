@@ -1,13 +1,45 @@
 package routes
 
 import (
-	"fmt"
-	"log"
 	"myapp/controller"
 	"net/http"
 
 	"github.com/gorilla/mux"
 )
+
+func InitializeRoutes() *mux.Router {
+
+	router := mux.NewRouter()
+
+	// ================= STUDENT ROUTES =================
+	router.HandleFunc("/student/add", controller.AddStudent).Methods("POST")
+	router.HandleFunc("/student/all", controller.GetAllStudents).Methods("GET")
+	router.HandleFunc("/student/{sid}", controller.GetStudent).Methods("GET")
+	router.HandleFunc("/student/{sid}", controller.UpdateStudent).Methods("PUT")
+	router.HandleFunc("/student/{sid}", controller.DeleteStudent).Methods("DELETE")
+
+	// ================= AUTH ROUTES =================
+	router.HandleFunc("/signup", controller.Signup).Methods("POST")
+	router.HandleFunc("/login", controller.Login).Methods("POST")
+	router.HandleFunc("/logout", controller.Logout)
+
+	// ================= ENROLL =================
+	router.HandleFunc("/enroll", controller.Enroll).Methods("POST")
+	router.HandleFunc("/enroll/all", controller.GetAllEnrollments).Methods("GET")
+
+	// ================= COURSE ROUTES =================
+	router.HandleFunc("/course/add", controller.AddCourse).Methods("POST")
+	router.HandleFunc("/course/all", controller.GetAllCourses).Methods("GET")
+	router.HandleFunc("/course/{cid}", controller.GetCourse).Methods("GET")
+	router.HandleFunc("/course/{cid}", controller.UpdateCourse).Methods("PUT")
+	router.HandleFunc("/course/{cid}", controller.DeleteCourse).Methods("DELETE")
+
+	// ================= STATIC FILES =================
+	fhandler := http.FileServer(http.Dir("./view"))
+	router.PathPrefix("/").Handler(fhandler)
+
+	return router
+}
 
 // func InitializeRoutes() {
 
@@ -51,38 +83,38 @@ import (
 // 	log.Fatal(http.ListenAndServe(":8080", router))
 // }
 
-func InitializeRoutes() {
+// func InitializeRoutes() {
 
-	router := mux.NewRouter()
+// 	router := mux.NewRouter()
 
-	// ================= STUDENT ROUTES =================
-	router.HandleFunc("/student/add", controller.AddStudent).Methods("POST")
-	router.HandleFunc("/student/all", controller.GetAllStudents).Methods("GET")
-	router.HandleFunc("/student/{sid}", controller.GetStudent).Methods("GET")
-	router.HandleFunc("/student/{sid}", controller.UpdateStudent).Methods("PUT")
-	router.HandleFunc("/student/{sid}", controller.DeleteStudent).Methods("DELETE")
+// 	// ================= STUDENT ROUTES =================
+// 	router.HandleFunc("/student/add", controller.AddStudent).Methods("POST")
+// 	router.HandleFunc("/student/all", controller.GetAllStudents).Methods("GET")
+// 	router.HandleFunc("/student/{sid}", controller.GetStudent).Methods("GET")
+// 	router.HandleFunc("/student/{sid}", controller.UpdateStudent).Methods("PUT")
+// 	router.HandleFunc("/student/{sid}", controller.DeleteStudent).Methods("DELETE")
 
-	// ================= AUTH ROUTES =================
-	router.HandleFunc("/signup", controller.Signup).Methods("POST")
-	router.HandleFunc("/login", controller.Login).Methods("POST")
-	router.HandleFunc("/logout", controller.Logout)
+// 	// ================= AUTH ROUTES =================
+// 	router.HandleFunc("/signup", controller.Signup).Methods("POST")
+// 	router.HandleFunc("/login", controller.Login).Methods("POST")
+// 	router.HandleFunc("/logout", controller.Logout)
 
-	// ================= ENROLL =================
-	router.HandleFunc("/enroll", controller.Enroll).Methods("POST")
-	router.HandleFunc("/enroll/all", controller.GetAllEnrollments).Methods("GET")
+// 	// ================= ENROLL =================
+// 	router.HandleFunc("/enroll", controller.Enroll).Methods("POST")
+// 	router.HandleFunc("/enroll/all", controller.GetAllEnrollments).Methods("GET")
 
-	// ================= COURSE ROUTES =================
-	router.HandleFunc("/course/add", controller.AddCourse).Methods("POST")
-	router.HandleFunc("/course/all", controller.GetAllCourses).Methods("GET")
-	router.HandleFunc("/course/{cid}", controller.GetCourse).Methods("GET")
-	router.HandleFunc("/course/{cid}", controller.UpdateCourse).Methods("PUT")
-	router.HandleFunc("/course/{cid}", controller.DeleteCourse).Methods("DELETE")
+// 	// ================= COURSE ROUTES =================
+// 	router.HandleFunc("/course/add", controller.AddCourse).Methods("POST")
+// 	router.HandleFunc("/course/all", controller.GetAllCourses).Methods("GET")
+// 	router.HandleFunc("/course/{cid}", controller.GetCourse).Methods("GET")
+// 	router.HandleFunc("/course/{cid}", controller.UpdateCourse).Methods("PUT")
+// 	router.HandleFunc("/course/{cid}", controller.DeleteCourse).Methods("DELETE")
 
-	// ================= STATIC FILES (ALWAYS LAST) =================
-	fhandler := http.FileServer(http.Dir("./view"))
-	router.PathPrefix("/").Handler(fhandler)
+// 	// ================= STATIC FILES (ALWAYS LAST) =================
+// 	fhandler := http.FileServer(http.Dir("./view"))
+// 	router.PathPrefix("/").Handler(fhandler)
 
-	fmt.Println("Server started successfully...")
-	log.Fatal(http.ListenAndServe(":8080", router))
-	//http.ListenAndServe("0.0.0.0:8080", router)
-}
+// 	fmt.Println("Server started successfully...")
+// 	log.Fatal(http.ListenAndServe(":8080", router))
+// 	//http.ListenAndServe("0.0.0.0:8080", router)
+// }
